@@ -1,1 +1,5 @@
-# input
+# @makeform/input
+
+## License
+
+MIT
