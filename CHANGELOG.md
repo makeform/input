@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.0.3
+
+ - tweak unit style to prevent affecting sibling elements
+
+
 ## v1.0.2
 
  - make title bar wrappable
