@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.0
+
+ - add `asLink` config for viewing content as link.
+
+
 ## v1.0.3
 
  - tweak unit style to prevent affecting sibling elements

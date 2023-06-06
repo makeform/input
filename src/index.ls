@@ -69,6 +69,13 @@ mod = ({root, ctx, data, parent, t}) ->
           else val + (if @mod.info.config.unit => that else "")
           node.classList.toggle \text-muted, @is-empty!
           node.innerText = text
+          if @mod.info.config.as-link and !@is-empty! =>
+            node.innerHTML = ""
+            node.appendChild(child = document.createElement \a)
+            child.setAttribute \href, val.replace(/^javascript:/,'')
+            child.setAttribute \target, "_blank"
+            child.setAttribute \rel, "noreferrer noopener"
+            child.innerText = text
 
   render: -> if @mod.child.view => @mod.child.view.render!
   is-empty: (v) ->
