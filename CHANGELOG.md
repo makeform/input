@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.1
+
+ - fix bug: unit not translated in view mode
+
+
 ## v1.1.0
 
  - add `asLink` config for viewing content as link.

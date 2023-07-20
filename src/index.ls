@@ -66,7 +66,7 @@ mod = ({root, ctx, data, parent, t}) ->
         content: ({node}) ~>
           val = @content!
           text = if @is-empty! => "n/a"
-          else val + (if @mod.info.config.unit => that else "")
+          else val + (if @mod.info.config.unit => (" " + t(that)) else "")
           node.classList.toggle \text-muted, @is-empty!
           node.innerText = text
           if @mod.info.config.as-link and !@is-empty! =>
