@@ -12,6 +12,13 @@ module.exports =
 
 mod = ({root, ctx, data, parent, t}) -> 
   {ldview,marked,DOMPurify} = ctx
+
+  markedr = new marked.Renderer!
+  markedr.link = (href, title, text) ->
+    link = marked.Renderer.prototype.link.call @, href, title, text
+    return link.replace \<a, '<a target="_blank" rel="noopener noreferrer" '
+  marked.setOptions renderer: markedr
+
   lc = {}
   init: ->
     lc = @mod.child
@@ -36,30 +43,33 @@ mod = ({root, ctx, data, parent, t}) ->
         change:
           input: handler
           "enable-markdown-input": ({node}) ~>
-            lc.markdown = node.checked
-            if !lc.markdown => lc.preview = false
-            if typeof(v = @value!) != \object => v = {v: v}
-            v.markdown = lc.markdown
+            use-markdown = node.checked
+            if !use-markdown => lc.preview = false
+            if typeof(v = @value!) != \object => v = {v: v or ''}
+            v.markdown = use-markdown
             @value v
             view.render!
         click:
           mode: ({node}) ->
+            if !@mod.info.config.show-markdown-option => return
             lc.preview = if node.getAttribute(\data-name) == \preview => true else false
             view.render!
       text:
         unit: ({node}) ~> t(@mod.info.config.unit or '')
       handler:
+        "enable-markdown-input": ({node}) ~>
+          node.checked = (@value! or {}).markdown
         "has-unit": ({node}) ~>
           node.classList.toggle \d-none, !@mod.info.config.unit
         "enable-markdown": ({node}) ~> node.classList.toggle \d-none, !@mod.info.config.show-markdown-option
         mode: ({node}) ~>
-          node.classList.toggle \d-none, !lc.markdown
+          use-markdown = (@value! or {}).markdown and @mod.info.config.show-markdown-option
+          node.classList.toggle \d-none, !use-markdown
           node.classList.toggle \active, !(lc.preview xor (node.getAttribute(\data-name) == \preview))
         preview: ({node}) ~>
           if !view => return
           node.classList.toggle \d-none, !lc.preview
           node.innerHTML = DOMPurify.sanitize(marked.parse view.get(\input).value)
-          #node.innerHTML = marked.parse view.get(\input).value
         input: ({node}) ~>
           readonly = !!@mod.info.meta.readonly
           if readonly => node.setAttribute \readonly, true
@@ -74,7 +84,8 @@ mod = ({root, ctx, data, parent, t}) ->
           else content + (if @mod.info.config.unit => (" " + t(that)) else "")
           node.classList.toggle \text-muted, @is-empty!
           node.innerText = text
-          if !value.markdown => node.innerText = text
+          use-markdown = @mod.info.config.show-markdown-option and value.markdown
+          if !use-markdown => node.innerText = text
           else node.innerHTML = DOMPurify.sanitize(marked.parse content)
           if @mod.info.config.as-link and !@is-empty! =>
             node.innerHTML = ""
@@ -88,6 +99,15 @@ mod = ({root, ctx, data, parent, t}) ->
   is-empty: (v) ->
     v = @content(v)
     return (typeof(v) == \undefined) or (typeof(v) == \string and v.trim! == "") or v == null
+  is-equal: (u, v) ->
+    eu = @is-empty u
+    ev = @is-empty v
+    if eu xor ev => return false
+    if eu and ev =>
+      if (u or v) and (u or {}).markdown != (v or {}).markdown => return false
+      return true
+    return JSON.stringify(u) == JSON.stringify(v)
+
   content: (v) ->
     if v and typeof(v) == \object => v.v else v
 

@@ -1,5 +1,14 @@
 # Change Logs
 
+## v1.1.3
+
+ - markdown link: force open in new tab
+ - make markdown only available if config allows.
+ - remove unused comment
+ - consider `markdown` option when checking equality
+ - remove useless `lc.markdown` option.
+
+
 ## v1.1.2
 
  - correctly translate and show markdown content 
