@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.1.2
+
+ - correctly translate and show markdown content 
+ - sanitize markdown output
+
+
 ## v1.1.1
 
  - fix bug: unit not translated in view mode

@@ -1,14 +1,17 @@
 module.exports =
   pkg:
     name: "@makeform/input", extend: {name: "@makeform/common"}
-    dependencies: [{name: "marked", version: "main", path: "marked.min.js"}]
+    dependencies: [
+      {name: "marked", version: "main", path: "marked.min.js"}
+      {name: "dompurify", version: "main", path: "dist/purify.min.js"}
+    ]
     i18n:
       "en": "單位": "unit"
       "zh-TW": "unit": "單位"
   init: (opt) -> opt.pubsub.fire \subinit, mod: mod(opt)
 
 mod = ({root, ctx, data, parent, t}) -> 
-  {ldview,marked} = ctx
+  {ldview,marked,DOMPurify} = ctx
   lc = {}
   init: ->
     lc = @mod.child
@@ -55,7 +58,8 @@ mod = ({root, ctx, data, parent, t}) ->
         preview: ({node}) ~>
           if !view => return
           node.classList.toggle \d-none, !lc.preview
-          node.innerHTML = marked.parse view.get(\input).value
+          node.innerHTML = DOMPurify.sanitize(marked.parse view.get(\input).value)
+          #node.innerHTML = marked.parse view.get(\input).value
         input: ({node}) ~>
           readonly = !!@mod.info.meta.readonly
           if readonly => node.setAttribute \readonly, true
@@ -64,15 +68,18 @@ mod = ({root, ctx, data, parent, t}) ->
           if @mod.info.config.placeholder => node.setAttribute \placeholder, @mod.info.config.placeholder
           else node.removeAttribute \placeholder
         content: ({node}) ~>
-          val = @content!
+          content = @content!
+          value = @value! or {}
           text = if @is-empty! => "n/a"
-          else val + (if @mod.info.config.unit => (" " + t(that)) else "")
+          else content + (if @mod.info.config.unit => (" " + t(that)) else "")
           node.classList.toggle \text-muted, @is-empty!
           node.innerText = text
+          if !value.markdown => node.innerText = text
+          else node.innerHTML = DOMPurify.sanitize(marked.parse content)
           if @mod.info.config.as-link and !@is-empty! =>
             node.innerHTML = ""
             node.appendChild(child = document.createElement \a)
-            child.setAttribute \href, val.replace(/^javascript:/,'')
+            child.setAttribute \href, content.replace(/^javascript:/,'')
             child.setAttribute \target, "_blank"
             child.setAttribute \rel, "noreferrer noopener"
             child.innerText = text
