@@ -50,7 +50,7 @@ mod = ({root, ctx, data, parent, t}) ->
             @value v
             view.render!
         click:
-          mode: ({node}) ->
+          mode: ({node}) ~>
             if !@mod.info.config.show-markdown-option => return
             lc.preview = if node.getAttribute(\data-name) == \preview => true else false
             view.render!

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.4
+
+ - fix bug: exception when switching markdown mode
+
+
 ## v1.1.3
 
  - markdown link: force open in new tab
