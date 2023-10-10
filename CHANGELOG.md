@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.6
+
+ - add `object-fit: contain` in image for correct image previewing
+
+
 ## v1.1.5
 
  - add `asImage` config for viewing content as image.
