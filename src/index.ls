@@ -94,6 +94,10 @@ mod = ({root, ctx, data, parent, t}) ->
             child.setAttribute \target, "_blank"
             child.setAttribute \rel, "noreferrer noopener"
             child.innerText = text
+          if @mod.info.config.as-image and !@is-empty! =>
+            node.innerHTML = ""
+            node.appendChild(child = document.createElement \img)
+            child.setAttribute \src, text
 
   render: -> if @mod.child.view => @mod.child.view.render!
   is-empty: (v) ->

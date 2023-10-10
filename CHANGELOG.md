@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.5
+
+ - add `asImage` config for viewing content as image.
+
+
 ## v1.1.4
 
  - fix bug: exception when switching markdown mode
