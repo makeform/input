@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.7
+
+ - check if the given content is possibly a correct url before using anchor to show it.
+
+
 ## v1.1.6
 
  - add `object-fit: contain` in image for correct image previewing

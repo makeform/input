@@ -88,12 +88,15 @@ mod = ({root, ctx, data, parent, t}) ->
           if !use-markdown => node.innerText = text
           else node.innerHTML = DOMPurify.sanitize(marked.parse content)
           if @mod.info.config.as-link and !@is-empty! =>
-            node.innerHTML = ""
-            node.appendChild(child = document.createElement \a)
-            child.setAttribute \href, content.replace(/^javascript:/,'')
-            child.setAttribute \target, "_blank"
-            child.setAttribute \rel, "noreferrer noopener"
-            child.innerText = text
+            href = content.replace(/^(javascript:|data:)/,'')
+            if !/^https:?:\/\//.exec(href) => href = "https://#href"
+            if /^https?:\/\/[^.\s]+\.[^.\s]+/.exec(href) =>
+              node.innerHTML = ""
+              node.appendChild(child = document.createElement \a)
+              child.setAttribute \href, href
+              child.setAttribute \target, "_blank"
+              child.setAttribute \rel, "noreferrer noopener"
+              child.innerText = text
           if @mod.info.config.as-image and !@is-empty! =>
             node.innerHTML = ""
             node.appendChild(child = document.createElement \img)
