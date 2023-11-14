@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.9
+
+ - use `mf-note` to replace styling in note-related tag.
+
+
 ## v1.1.8
 
  - fix bug: incorrect i18n keyword for zh-TW
