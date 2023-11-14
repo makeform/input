@@ -7,7 +7,7 @@ module.exports =
     ]
     i18n:
       "en": "單位": "unit"
-      "zh-TW": "unit": "單位"
+      "zh-TW": "單位": "單位"
   init: (opt) -> opt.pubsub.fire \subinit, mod: mod(opt)
 
 mod = ({root, ctx, data, parent, t}) -> 

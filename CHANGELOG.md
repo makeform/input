@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.1.8
+
+ - fix bug: incorrect i18n keyword for zh-TW
+
+
 ## v1.1.7
 
  - check if the given content is possibly a correct url before using anchor to show it.
