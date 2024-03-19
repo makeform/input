@@ -1,5 +1,11 @@
 # Change Logs
 
+## v1.1.10
+
+ - tweak unit labelstyle to prevent affecting input content
+ - upgrade dependencies and move srcbuild to dev dependencies
+
+
 ## v1.1.9
 
  - use `mf-note` to replace styling in note-related tag.
