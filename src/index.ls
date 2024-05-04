@@ -26,12 +26,26 @@ mod = ({root, ctx, data, parent, t}) ->
     @on \change, (v) ~>
       c = @content v
       if !(c?) => c = ''
+      if @mod.info.config.auto-comma => c = comma(c)
       if view.get(\input).value == c => return
       if view =>
         view.get(\input).value = c
         view.render <[preview input content]>
+
+    decomma = (v) -> "#{if v? => v else ''}".replace(/,/g,'')
+    comma = (v) ->
+      v = "#{if v? => v else ''}".trim!replace(/,/g,'')
+      o = /^([0-9-]+)((?:\.?.+)?)$/.exec(v)
+      if !o => return v
+      [ret,vs] = ['', o.1.split('')]
+      for i from 0 til vs.length
+        ret = vs[vs.length - i - 1] + ret
+        if (i % 3) == 2 and i < vs.length - 1 and /[0-9]/.exec(vs[vs.length - i - 2] or '') => ret = ',' + ret
+      ret + o.2
+
     handler = ({node}) ~>
-      if @content(v = @value!) == (nv = node.value) => return
+      nv = if !@mod.info.config.auto-comma => node.value else decomma(node.value)
+      if @content(v = @value!) == nv => return
       if v and typeof(v) == \object => v.v = nv
       else v = {v: nv}
       @value v
@@ -80,6 +94,7 @@ mod = ({root, ctx, data, parent, t}) ->
         content: ({node}) ~>
           content = @content!
           value = @value! or {}
+          if !@is-empty! and @mod.info.config.auto-comma => content = comma(content)
           text = if @is-empty! => "n/a"
           else content + (if @mod.info.config.unit => (" " + t(that)) else "")
           node.classList.toggle \text-muted, @is-empty!

@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.0
+
+ - support `autoComma`
+
+
 ## v1.1.10
 
  - tweak unit labelstyle to prevent affecting input content
