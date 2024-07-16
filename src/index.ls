@@ -104,7 +104,7 @@ mod = ({root, ctx, data, parent, t}) ->
           else node.innerHTML = DOMPurify.sanitize(marked.parse content)
           if @mod.info.config.as-link and !@is-empty! =>
             href = content.replace(/^(javascript:|data:)/,'')
-            if !/^https:?:\/\//.exec(href) => href = "https://#href"
+            if !/^https?:\/\//.exec(href) => href = "https://#href"
             if /^https?:\/\/[^.\s]+\.[^.\s]+/.exec(href) =>
               node.innerHTML = ""
               node.appendChild(child = document.createElement \a)

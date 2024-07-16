@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.2.1
+
+ - fix typo in url protocol matching
+
+
 ## v1.2.0
 
  - support `autoComma`
