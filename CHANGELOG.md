@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.3.0
+
+ - support `with-link` option for links inside content
+
+
 ## v1.2.1
 
  - fix typo in url protocol matching

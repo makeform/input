@@ -112,6 +112,18 @@ mod = ({root, ctx, data, parent, t}) ->
               child.setAttribute \target, "_blank"
               child.setAttribute \rel, "noreferrer noopener"
               child.innerText = text
+          else if @mod.info.config.with-link and !@is-empty! =>
+            node.innerHTML = ""
+            content.split(' ').map (c,i) ->
+              if /^https?:\/\/[^.\s]+\.[^.\s]+/.exec(c) =>
+                child = document.createElement \a
+                child.setAttribute \href, c
+                child.setAttribute \target, "_blank"
+                child.setAttribute \rel, "noreferrer noopener"
+                child.innerText = c
+              else child = document.createTextNode(c)
+              if i != 0 => node.appendChild(document.createTextNode(' '))
+              node.appendChild(child)
           if @mod.info.config.as-image and !@is-empty! =>
             node.innerHTML = ""
             node.appendChild(child = document.createElement \img)
