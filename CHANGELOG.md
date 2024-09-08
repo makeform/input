@@ -1,5 +1,10 @@
 # Change Logs
 
+## v1.3.1
+
+ - fix bug: separator for `with-link` should include all possible spaces
+
+
 ## v1.3.0
 
  - support `with-link` option for links inside content
