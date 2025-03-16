@@ -1,18 +1,9 @@
 div
-  .form-group.has-tips.manual(ld="base error-root",plug="widget",style="cursor:default")
-    div(ld="display", data-display="block"): label.d-flex.align-items-end.flex-wrap
-      div
-        span(ld="label")
-        span.variant.text-sm.ml-2 (#[span(ld="variant")])
-        span.text-danger.ml-2(ld="is-required") *
-      .flex-grow-1
-      .m-edit: .mf-note.text-sm(ld="limitation")
-    .text-sm.text-muted(ld="display", data-display="block"): div(ld="desc", style="margin:-.6em 0 .7em")
-    .m-edit
+  style(type="text/css"): include:stylus index.styl
+  script(type="@plotdb/block"): include:lsc index.ls
+  div(plug="body")
+    .m-edit.has-tips.manual(ld="error-root")
       input.form-control(ld="input",autocomplete="off",autocapitalize="off")
       .unit.text-muted(ld="has-unit") #[span(t) 單位]: #[span(ld="unit")  ...]
       .hover-tip.tip-sm: div(ld-each="error")
-    .m-edit(ld="display",data-display="block"): .mf-note.text-sm.mt-2.note(ld-each="note")
     .m-view(ld="content")
-  style(type="text/css"): include:stylus index.styl
-  script(type="@plotdb/block"): include:lsc index.ls

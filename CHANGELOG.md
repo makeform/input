@@ -1,5 +1,11 @@
 # Change Logs
 
+## v2.0.0 (upcoming)
+
+ - tweak DOM based on updated `@makeform/common` DOM structure.
+ - remove `variant` class since `@makeform/common` provides related classes now.
+
+
 ## v1.3.1
 
  - fix bug: separator for `with-link` should include all possible spaces
