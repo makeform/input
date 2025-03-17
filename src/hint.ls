@@ -1,3 +1,12 @@
+# NOTE and TODO
+/*
+  hint can be a generic concept, however it requires some formal definition in `@plotdb/form`
+  and it won't be easy if we want to be flexible, especially when it involves multiple terms.
+
+  for now we workaround by implementing hint separatedly in widget.
+  this leads to some tech debt such as duplicated `word-len` here.
+*/
+
 word-len = (v = "", method) ->
   return if method == \simple-word =>
     v.split(/\s|[,.;:!?，。；：︰！？、．　"]/).filter(->it)
