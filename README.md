@@ -13,6 +13,8 @@ Text input widget suitable for one line short text, links or number.
  - `unit`: optional, a string representing unit of this field if provided.
    - shown as a small dimmed text at the corner of this widget if provided
  - `placeholder`: placeholder text to be shown. optional, nothing will be shown if omitted.
+ - `hint`: an object with following field for input statistics hint.
+   - `enabled`: default false. when true, show information based on length related `term` about how many characters left.
 
 it also provides following configs for using in `@makeform/textarea` or any other widgets want to extend `@makeform/input` and use related features:
 

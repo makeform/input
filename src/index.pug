@@ -1,9 +1,12 @@
 div
   style(type="text/css"): include:stylus index.styl
-  script(type="@plotdb/block"): include:lsc index.ls
+  script(type="@plotdb/block")
+    include:lsc hint.ls
+    include:lsc index.ls
   div(plug="body")
     .m-edit.has-tips.manual(ld="error-root")
       input.form-control(ld="input",autocomplete="off",autocapitalize="off")
       .unit.text-muted(ld="has-unit") #[span(t) 單位]: #[span(ld="unit")  ...]
+      .text-sm.text-right(ld="remain")
       .hover-tip.tip-sm: div(ld-each="error")
     .m-view(ld="content")

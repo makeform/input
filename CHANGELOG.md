@@ -4,6 +4,7 @@
 
  - tweak DOM based on updated `@makeform/common` DOM structure.
  - remove `variant` class since `@makeform/common` provides related classes now.
+ - support hint about remaining characters by `hint.enabled` option
 
 
 ## v1.3.1

@@ -71,6 +71,15 @@ mod = ({root, ctx, data, parent, t}) ->
       text:
         unit: ({node}) ~> t(@mod.info.config.unit or '')
       handler:
+        remain: ({node}) ~>
+          enabled = !!(@mod.info.config.hint or {}).enabled
+          if !enabled => return node.textContent = ""
+          content = "#{@content! or ''}"
+          terms = @serialize!term
+          ret = hint {content, terms}
+          node.textContent = ret.text
+          node.classList.toggle \text-danger, !!ret.invalid
+
         "enable-markdown-input": ({node}) ~>
           node.checked = (@value! or {}).markdown
         "has-unit": ({node}) ~>
