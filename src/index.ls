@@ -6,8 +6,20 @@ module.exports =
       {name: "dompurify", version: "main", path: "dist/purify.min.js"}
     ]
     i18n:
-      "en": "單位": "unit"
-      "zh-TW": "單位": "單位"
+      "en":
+        "單位": "unit"
+        "還差": "remaining to reach:"
+        "超過": "exceeded by:"
+        "還剩": "remaining:"
+        "已寫": "written:"
+        "字": "word(s)"
+      "zh-TW":
+        "單位": "單位"
+        "還差": "還差"
+        "超過": "超過"
+        "還剩": "還剩"
+        "已寫": "已寫"
+        "字": "字"
   init: (opt) -> opt.pubsub.fire \subinit, mod: mod(opt)
 
 mod = ({root, ctx, data, parent, t}) -> 
@@ -73,10 +85,11 @@ mod = ({root, ctx, data, parent, t}) ->
       handler:
         remains: ({node}) ~>
           enabled = !!(@mod.info.config.hint or {}).enabled
+          node.classList.toggle \d-none, !enabled
           if !enabled => return node.textContent = ""
           content = "#{@content! or ''}"
           terms = @serialize!term
-          ret = hint {content, terms}
+          ret = hint {content, terms, t}
           node.textContent = ret.text
           node.classList.toggle \text-danger, !!ret.invalid
 

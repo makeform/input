@@ -16,7 +16,7 @@ word-len = (v = "", method) ->
       .reduce(((a,b) -> a + b), 0)
   else v.length
 
-hint = ({content, terms}) ->
+hint = ({content, terms, t}) ->
   terms = (terms or []).filter -> it.opset == \length
   lc = {}
   if !terms.length => ret = [0, ""]
@@ -37,8 +37,8 @@ hint = ({content, terms}) ->
       Math.min.apply Math, list.map(->it.0)
       Math.min.apply Math, list.map(->it.1)
     ]
-    ret = if lc.min? and ret.0 < 0 => [-1, "還差 #{-ret.0} 個字"]
-    else if lc.max? and ret.1 < 0 => [1, "超過 #{-ret.1} 個字"]
-    else if lc.max? => [0, "還剩 #{ret.1} 個字"]
-    else [0, "已經寫了 #{lc.count} 個字"]
+    ret = if lc.min? and ret.0 < 0 => [-1, "#{t(\還差)} #{-ret.0} #{t(\字)}"]
+    else if lc.max? and ret.1 < 0 => [1, "#{t(\超過)} #{-ret.1} #{t(\字)}"]
+    else if lc.max? => [0, "#{t(\還剩)} #{ret.1} #{t(\字)}"]
+    else [0, "#{t(\已寫)} #{lc.count} #{t(\字)}"]
     return {invalid: !!ret.0, text: ret.1}

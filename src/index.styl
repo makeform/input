@@ -1,17 +1,25 @@
-.unit
-  pointer-events: none
-  text-align: right
-  margin: -1em .66em 0 auto
-  transform: translate(0,.35em)
-  width: fit-content
-  transition: margin-right .15s ease-in-out
-  line-height: 1em
-  font-size: .66em
-  text-shadow: -1px -1px 0 white, 1px 1px 0 white, 2px -2px 0 white, -2px 2px 0 white
-.is-invalid + .unit
-  margin-right: 2.75em
 img
   max-width: 100%
   max-height: 80vh
   width: 100%
   object-fit: contain
+
+.unit, .remains
+  pointer-events: none
+  margin-top: -1em
+  transform: translate(0,.45em)
+  width: fit-content
+  line-height: 1em
+  font-size: .66em
+  text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white
+
+.unit
+  margin-right: .66em
+  margin-left: auto
+  transition: margin-right .15s ease-in-out
+
+.remains
+  margin: -1em 0 0 .5em
+
+.is-invalid + .unit
+  margin-right: 2.75em
