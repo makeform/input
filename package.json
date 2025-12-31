@@ -8,6 +8,6 @@
   "license": "MIT",
   "devDependencies": {
     "@plotdb/srcbuild": "^0.0.69",
-    "fedep": "^1.4.1"
+    "fedep": "^1.6.0"
   }
 }
