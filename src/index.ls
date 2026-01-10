@@ -1,6 +1,8 @@
 module.exports =
   pkg:
-    name: "@makeform/input", extend: {name: "@makeform/common"}
+    name: "@makeform/input"
+    extend: name: \@makeform/common
+    host: name: \@grantdash/composer
     dependencies: [
       {name: "marked", version: "main", path: "marked.min.js"}
       {name: "dompurify", version: "main", path: "dist/purify.min.js"}
@@ -13,6 +15,14 @@ module.exports =
         "還剩": "remaining:"
         "已寫": "written:"
         "字": "word(s)"
+        config:
+          autoComma: name: 'Number Formatting', desc: "Display numbers with thousands separators (commas)."
+          asLink: name: 'Display as Link', desc: "Treat the entire input content as a clickable link."
+          withLink: name: 'Auto Link', desc: "Automatically detect and hyper-link URLs within the content."
+          asImage: name: 'Display as Image', desc: "Treat the input as an image URL and display the image with lightbox preview."
+          unit: name: 'Unit', desc: "Display an additional unit label or suffix."
+          placeholder: name: 'Placeholder Text', desc: "The example text shown when the field is empty."
+          hint: name: 'Character Count Hint', desc: "Enable character count limit or hints."
       "zh-TW":
         "單位": "單位"
         "還差": "還差"
@@ -20,9 +30,31 @@ module.exports =
         "還剩": "還剩"
         "已寫": "已寫"
         "字": "字"
-  init: (opt) -> opt.pubsub.fire \subinit, mod: mod(opt)
+        config:
+         autoComma: name: '數字逗點', desc: "內容數字以逗點做每千位分隔呈現"
+         asLink: name: '呈現連結', desc: "輸入內容整體以連結呈現"
+         withLink: name: '自動連結', desc: "輸入內容中若含連結，則以連結呈現"
+         asImage: name: '呈現圖片', desc: "輸入內容視為圖片網址，並於檢視時顯示圖片"
+         unit: name: '單位', desc: "顯示額外的單位提示"
+         placeholder: name: '範例文字', desc: "內容空白時，欄位中的範例文字"
+         hint: name: '字數提示', desc: "啟用字數提示"
 
-mod = ({root, ctx, data, parent, t}) -> 
+  init: (opt) ->
+    opt.pubsub.on \inited, (o = {}) ~> @ <<< o
+    opt.pubsub.fire \subinit, mod: mod.call @, opt
+  client: (bid) ->
+    minibar: []
+    meta: config:
+      auto-comma: type: \boolean, name: \config.autoComma.name, desc: \config.autoComma.desc
+      as-link: type: \boolean, name: \config.asLink.name, desc: \config.asLink.desc
+      with-link: type: \boolean, name: \config.withLink.name, desc: \config.withLink.desc
+      as-image: type: \boolean, name: \config.asImage.name, desc: \config.asImage.desc
+      unit: type: \text, name: \config.unit.name, desc: \config.unit.desc
+      placeholder: type: \text, name: \config.placeholder.name, desc: \config.placeholder.desc
+      hint: enabled: type: \boolean, name: \config.hint.name, desc: \config.hint.desc
+    render: ~> @widget.mod.child.view.render!
+
+mod = ({root, ctx, data, parent, t}) ->
   {ldview,marked,DOMPurify} = ctx
 
   markedr = new marked.Renderer!
@@ -30,8 +62,6 @@ mod = ({root, ctx, data, parent, t}) ->
     link = marked.Renderer.prototype.link.call @, href, title, text
     return link.replace \<a, '<a target="_blank" rel="noopener noreferrer" '
   marked.setOptions renderer: markedr
-
-  lc = {}
   init: ->
     lc = @mod.child
     view = {}
