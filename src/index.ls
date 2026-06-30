@@ -115,12 +115,17 @@ mod = ({root, ctx, data, parent, t}) ->
       handler:
         remains: ({node}) ~>
           enabled = !!(@mod.info.config.hint or {}).enabled
-          node.classList.toggle \d-none, !enabled
-          if !enabled => return node.textContent = ""
+          if !enabled =>
+            # d-none: !enabled, or enabled but !ret.text
+            # this ensures remains shown only if there are content
+            # so container won't shrink due to empty remains' margin-top -1em
+            node.classList.toggle \d-none, !enabled
+            return node.textContent = ""
           content = "#{@content! or ''}"
           terms = @serialize!term
           ret = hint {content, terms, t}
           node.textContent = ret.text
+          node.classList.toggle \d-none, !ret.text
           node.classList.toggle \text-danger, !!ret.invalid
 
         "enable-markdown-input": ({node}) ~>
