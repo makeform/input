@@ -1,5 +1,10 @@
 # Change Logs
 
+## v3.0.2
+
+ - upgrade dependencies
+
+
 ## v3.0.1
 
  - tweak remains visibility based on content to fix potential layout issue

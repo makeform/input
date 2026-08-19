@@ -1,13 +1,13 @@
 {
   "name": "@makeform/input",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "",
   "scripts": {},
   "keywords": [],
   "author": "zbryikt",
   "license": "MIT",
   "devDependencies": {
-    "@plotdb/srcbuild": "^0.0.70",
-    "fedep": "^1.7.3"
+    "@plotdb/srcbuild": "^0.0.71",
+    "fedep": "^1.7.6"
   }
 }
